@@ -3,6 +3,9 @@ use axum::{
     Router,
 };
 use tokio::net::TcpListener;
+use utils::constants::PORT;
+
+mod utils;
 
 async fn hello_world() -> &'static str {
     "Hello, World!"
@@ -10,9 +13,12 @@ async fn hello_world() -> &'static str {
 
 #[tokio::main]
 async fn main() {
+    println!("Starting server on port {}", PORT);
+
     let app = Router::new()
         .route("/", get(hello_world));
 
-    let listener = TcpListener::bind("0.0.0.0:3000").await.unwrap();
+    let address = format!("0.0.0.0:{}", PORT);
+    let listener = TcpListener::bind(address).await.unwrap();
     axum::serve(listener, app).await.unwrap();
 }
