@@ -8,6 +8,7 @@ use tokio::net::TcpListener;
 use rss::ChannelBuilder;
 use rss::validation::Validate;
 use utils::constants::PORT;
+use utils::art::print_dp_rss;
 use api::endpoints::hello_world;
 
 mod api;
@@ -34,6 +35,7 @@ async fn get_rss_feed() -> impl IntoResponse {
 
 #[tokio::main]
 async fn main() {
+    print_dp_rss();
     println!("Starting server on port {}", PORT);
 
     let app = Router::new()
